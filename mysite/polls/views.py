@@ -6,8 +6,10 @@ from django.views import generic
 from .models import Choice,Question
 
 def index(request):
-    question = Question.objects.order_by('?').first()
-    return render(request,'polls/detail.html', { 'question': question })
+    answered_questions = request.session['answered_questions']
+    #question = Question.objects.exclude(id__in=request.session['answered_questions']).order_by('?').first()
+    question = Question.objects.exclude(id__in=[1]).order_by('?').first()
+    return render(request,'polls/detail.html', { 'question': question, 'answered_questions': answered_questions })
 
 
 class DetailView(generic.DetailView):
@@ -24,6 +26,13 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        if not 'answered_questions' in request.session or not request.session['answered_questions']:
+            request.session['answered_questions'] = [question_id]
+        else:
+            answered_questions = request.session['answered_questions']
+            if not int(question_id) in answered_questions:
+                answered_questions.append(question_id)
+                request.session['answered_questions'] = answered_questions
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
