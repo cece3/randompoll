@@ -6,11 +6,22 @@ from django.views import generic
 from .models import Choice,Question
 
 def index(request):
-    answered_questions = request.session['answered_questions']
-    #question = Question.objects.exclude(id__in=request.session['answered_questions']).order_by('?').first()
-    question = Question.objects.exclude(id__in=[1]).order_by('?').first()
-    return render(request,'polls/detail.html', { 'question': question, 'answered_questions': answered_questions })
-
+    try:
+        if 'answered_questions' not in request.session: 
+            print('It is None')
+            question = Question.objects.order_by('?').first()
+        else:
+            print ("It is defined and has a value: ")
+            answered_questions = request.session['answered_questions']
+            print (answered_questions)
+            question = Question.objects.exclude(id__in=answered_questions).order_by('?').first()
+            if not question:
+                #if there are not any other questions remaining, delete teh session and start over
+                del request.session['answered_questions']
+                question = Question.objects.order_by('?').first()
+        return render(request,'polls/detail.html', { 'question': question })
+    except(NameError):
+        print ("other error")
 
 class DetailView(generic.DetailView):
     model = Question
