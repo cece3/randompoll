@@ -1,15 +1,15 @@
 # RandomPoll
 
-RandomPoll is a web application built using Django to 
+RandomPoll is a web application built using Django to serve a randomly selected poll question to a user
 
 ## Pre-Requisites
-Make sure you have the following pre-requisites installed.
+Make sure you have the following pre-requisites installed:
 ```python
 Python 3.7.4
 Django 2.2.4
 Postgres 11.5
 ```
-You can verify these are installed by running the following command
+You can verify these are installed by running the following commands:
 ```bash
 python -m django --version
 postgres -V
