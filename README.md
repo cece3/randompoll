@@ -4,13 +4,13 @@ RandomPoll is a web application built using Django to
 
 ## Pre-Requisites
 
-'''python
+```python
 Python 3.7.4
-'''
+```
 
-'''Django
+```Django
 Django 2.2.4 installed
-'''
+```
 
 
 ## Installation
