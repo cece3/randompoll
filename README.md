@@ -3,13 +3,16 @@
 RandomPoll is a web application built using Django to 
 
 ## Pre-Requisites
-
+Make sure you have the following pre-requisites installed.
 ```python
 Python 3.7.4
+Django 2.2.4
+Postgres 11.5
 ```
-
-```Django
-Django 2.2.4 installed
+You can verify these are installed by running the following command
+```bash
+python -m django --version
+postgres -V
 ```
 
 
@@ -24,11 +27,7 @@ git clone repo: https://github.com/cece3/randompoll.git
 ## Usage
 
 ```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+python manage.py runserver
 ```
 
 ## Contributing
