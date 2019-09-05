@@ -16,9 +16,10 @@ def index(request):
             print (answered_questions)
             question = Question.objects.exclude(id__in=answered_questions).order_by('?').first()
             if not question:
-                #if there are not any other questions remaining, delete teh session and start over
+                #if there are not any other questions remaining, delete the session and start over
                 del request.session['answered_questions']
-                question = Question.objects.order_by('?').first()
+                #question = Question.objects.order_by('?').first()
+                return HttpResponseRedirect('finished')
         return render(request,'polls/detail.html', { 'question': question })
     except(NameError):
         print ("other error")
@@ -32,6 +33,8 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
+def finished(Request):
+    return HttpResponse('Congratulations, you have answered all of the questions in this poll!<br/><br/><a href="/polls"HttpResponse>Start over</a>')
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
