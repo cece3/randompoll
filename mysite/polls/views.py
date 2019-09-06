@@ -11,7 +11,6 @@ def index(request):
             print('It is None')
             question = Question.objects.order_by('?').first()
         else:
-            print ("It is defined and has a value: ")
             answered_questions = request.session['answered_questions']
             print (answered_questions)
             question = Question.objects.exclude(id__in=answered_questions).order_by('?').first()
